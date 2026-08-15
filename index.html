@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
-    <meta name="theme-color" content="#3478f6" />
+    <meta name="theme-color" content="#ffd83d" />
     <meta name="description" content="一款无广告、离线优先的个人记账本" />
     <link rel="manifest" href="manifest.webmanifest" />
     <link rel="icon" href="icon.svg" type="image/svg+xml" />
@@ -14,17 +14,18 @@
   <body>
     <main class="app-shell">
       <header class="topbar">
-        <div>
-          <p class="eyebrow">我的账本</p>
+        <div class="brand-mark">¥</div>
+        <div class="brand-copy">
           <h1 id="bookTitle">Sunny记账</h1>
+          <button class="book-button" id="bookButton">家庭账本⌄</button>
         </div>
-        <div class="header-actions"><button class="book-button" id="bookButton">家庭账本⌄</button><button class="icon-button" id="settingsButton" aria-label="设置">⚙️</button></div>
+        <button class="icon-button" id="settingsButton" aria-label="设置">⚙</button>
       </header>
 
       <section class="month-switcher" aria-label="账单月份">
         <button class="round-button" id="previousMonth" aria-label="上个月">‹</button>
-        <button class="month-label" id="monthLabel"></button>
-        <input id="monthPicker" type="month" aria-label="选择年月" />
+        <button class="month-label" id="monthLabel" aria-label="选择年月"></button>
+        <input id="monthPicker" type="month" aria-label="选择年月" hidden />
         <button class="round-button" id="nextMonth" aria-label="下个月">›</button>
       </section>
 
@@ -77,11 +78,12 @@
       </section>
     </main>
 
-    <button class="add-button" id="addButton" aria-label="新增一笔">＋</button>
     <nav class="bottom-nav" aria-label="主要导航">
-      <button class="nav-item active" data-view="book"><span>▤</span>账本</button>
-      <button class="nav-item" data-view="report"><span>◔</span>统计</button>
-      <button class="nav-item" id="navSettings"><span>⚙</span>设置</button>
+      <button class="nav-item active" data-view="book"><span>▤</span>明细</button>
+      <button class="nav-item" data-view="report"><span>◔</span>图表</button>
+      <button class="add-button" id="addButton" aria-label="新增一笔">＋<small>记账</small></button>
+      <button class="nav-item" id="navBooks"><span>▣</span>账本</button>
+      <button class="nav-item" id="navSettings"><span>◎</span>我的</button>
     </nav>
 
     <dialog id="transactionDialog" class="sheet-dialog record-dialog">
@@ -114,7 +116,7 @@
         <div class="sheet-head"><h2>设置与备份</h2><button class="icon-button" data-close="settingsDialog" aria-label="关闭">×</button></div>
         <p class="settings-note">Sunny记账默认仅保存在这台设备。请定期导出备份。</p>
         <label><span>货币符号</span><input id="currencyInput" maxlength="4" value="¥" /></label>
-        <label><span>本月预算（可选）</span><input id="budgetInput" type="number" inputmode="decimal" min="0" step="0.01" placeholder="例如：5000" /></label>
+        <label><span id="budgetLabel">本月预算（可选）</span><input id="budgetInput" type="number" inputmode="decimal" min="0" step="0.01" placeholder="例如：5000" /></label>
         <button id="saveSettings" class="primary-button">保存设置</button>
         <div class="settings-group">
           <h3>分类管理</h3>
@@ -148,9 +150,9 @@
         <div class="sheet-head"><div><p class="eyebrow" id="reportEyebrow">月度回顾</p><h2 id="reportMonth">本月统计</h2></div><button class="icon-button" data-close="reportDialog" aria-label="关闭">×</button></div>
         <div class="report-tabs"><button class="active" data-report-mode="month">月账单</button><button data-report-mode="year">年账单</button><button data-report-mode="chart">图表</button></div>
         <div class="bill-picker" id="billPicker"><span id="billPickerLabel">选择年份</span><select id="reportYearPicker"></select></div>
-        <div class="report-hero"><span>本月结余</span><strong id="reportBalance">¥0.00</strong><small>每一笔认真记录，都是更安心的生活。</small></div>
-        <div class="report-metrics"><article><span>收入</span><b id="reportIncome">¥0.00</b></article><article><span>支出</span><b id="reportExpense">¥0.00</b></article><article><span>记账天数</span><b id="reportDays">0 天</b></article></div>
-        <section class="trend-wrap" id="trendWrap" hidden><div class="trend-head"><h3 id="trendTitle">每月支出趋势</h3><span id="trendHint"></span></div><div class="chart-periods"><button data-chart-period="week">周</button><button data-chart-period="month">月</button><button data-chart-period="year" class="active">年</button></div><canvas id="trendChart" height="150"></canvas></section>
+        <div class="report-hero"><span id="reportBalanceLabel">年结余</span><strong id="reportBalance">¥0.00</strong><small>每一笔认真记录，都是更安心的生活。</small></div>
+        <div class="report-metrics"><article><span id="reportIncomeLabel">年收入</span><b id="reportIncome">¥0.00</b></article><article><span id="reportExpenseLabel">年支出</span><b id="reportExpense">¥0.00</b></article><article><span id="reportCountLabel">记账天数</span><b id="reportDays">0 天</b></article></div>
+        <section class="trend-wrap" id="trendWrap" hidden><div class="trend-head"><select id="chartType" aria-label="统计类型"><option value="expense">支出趋势</option><option value="income">收入趋势</option></select><span id="trendHint"></span></div><div class="chart-periods"><button data-chart-period="week">周</button><button data-chart-period="month">月</button><button data-chart-period="year" class="active">年</button></div><canvas id="trendChart" height="190"></canvas></section>
         <section id="billTableWrap" class="bill-table-wrap"><div class="bill-table-head" id="billTableHead"></div><div id="billRows" class="bill-rows"></div></section>
         <section id="rankWrap"><h3>支出排行</h3><div id="reportRanks" class="report-ranks"></div></section>
       </section>
@@ -162,6 +164,15 @@
         <div id="bookList" class="book-list"></div>
         <div class="book-add-row"><input id="newBookName" maxlength="16" placeholder="例如：生意账本" /><input id="newBookColor" type="color" value="#3478f6" aria-label="账本颜色" /><button id="addBook" class="small-primary" type="button">创建</button></div>
         <p class="settings-note">账本可以分别记录家庭、生意或自媒体收支。</p>
+      </section>
+    </dialog>
+
+    <dialog id="historyDialog" class="sheet-dialog small-dialog history-dialog">
+      <section>
+        <div class="sheet-head"><div><p class="eyebrow">历史账单</p><h2>选择年月</h2></div><button class="icon-button" data-close="historyDialog" aria-label="关闭">×</button></div>
+        <label class="history-year"><span>年份</span><select id="historyYear"></select></label>
+        <div class="month-grid" id="historyMonths" aria-label="月份"></div>
+        <button class="secondary-button" id="showAllHistory" type="button">查看全部历史流水</button>
       </section>
     </dialog>
 
