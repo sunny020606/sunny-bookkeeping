@@ -24,6 +24,7 @@
       <section class="month-switcher" aria-label="账单月份">
         <button class="round-button" id="previousMonth" aria-label="上个月">‹</button>
         <button class="month-label" id="monthLabel"></button>
+        <input id="monthPicker" type="month" aria-label="选择年月" />
         <button class="round-button" id="nextMonth" aria-label="下个月">›</button>
       </section>
 
@@ -64,9 +65,9 @@
       <section class="section-head">
         <div>
           <p class="eyebrow">明细</p>
-          <h2>本月流水</h2>
+          <h2 id="listTitle">本月流水</h2>
         </div>
-        <button class="text-button" id="filterButton">筛选</button>
+        <div class="list-actions"><button class="text-button" id="allHistoryButton">全部历史</button><button class="text-button" id="filterButton">筛选</button></div>
       </section>
       <section id="transactionList" class="transaction-list" aria-live="polite"></section>
       <section id="emptyState" class="empty-state">
@@ -148,6 +149,7 @@
         <div class="report-tabs"><button class="active" data-report-mode="month">月账单</button><button data-report-mode="year">年账单</button></div>
         <div class="report-hero"><span>本月结余</span><strong id="reportBalance">¥0.00</strong><small>每一笔认真记录，都是更安心的生活。</small></div>
         <div class="report-metrics"><article><span>收入</span><b id="reportIncome">¥0.00</b></article><article><span>支出</span><b id="reportExpense">¥0.00</b></article><article><span>记账天数</span><b id="reportDays">0 天</b></article></div>
+        <section class="trend-wrap" id="trendWrap" hidden><div class="trend-head"><h3>每月支出趋势</h3><span id="trendHint"></span></div><canvas id="trendChart" height="150"></canvas></section>
         <h3>支出排行</h3><div id="reportRanks" class="report-ranks"></div>
       </section>
     </dialog>
