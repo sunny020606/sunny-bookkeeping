@@ -16,9 +16,9 @@
       <header class="topbar">
         <div>
           <p class="eyebrow">我的账本</p>
-          <h1>Sunny记账</h1>
+          <h1 id="bookTitle">Sunny记账</h1>
         </div>
-        <button class="icon-button" id="settingsButton" aria-label="设置">⚙️</button>
+        <div class="header-actions"><button class="book-button" id="bookButton">家庭账本⌄</button><button class="icon-button" id="settingsButton" aria-label="设置">⚙️</button></div>
       </header>
 
       <section class="month-switcher" aria-label="账单月份">
@@ -144,10 +144,20 @@
 
     <dialog id="reportDialog" class="sheet-dialog report-dialog">
       <section>
-        <div class="sheet-head"><div><p class="eyebrow">月度回顾</p><h2 id="reportMonth">本月统计</h2></div><button class="icon-button" data-close="reportDialog" aria-label="关闭">×</button></div>
+        <div class="sheet-head"><div><p class="eyebrow" id="reportEyebrow">月度回顾</p><h2 id="reportMonth">本月统计</h2></div><button class="icon-button" data-close="reportDialog" aria-label="关闭">×</button></div>
+        <div class="report-tabs"><button class="active" data-report-mode="month">月账单</button><button data-report-mode="year">年账单</button></div>
         <div class="report-hero"><span>本月结余</span><strong id="reportBalance">¥0.00</strong><small>每一笔认真记录，都是更安心的生活。</small></div>
         <div class="report-metrics"><article><span>收入</span><b id="reportIncome">¥0.00</b></article><article><span>支出</span><b id="reportExpense">¥0.00</b></article><article><span>记账天数</span><b id="reportDays">0 天</b></article></div>
         <h3>支出排行</h3><div id="reportRanks" class="report-ranks"></div>
+      </section>
+    </dialog>
+
+    <dialog id="bookDialog" class="sheet-dialog small-dialog">
+      <section>
+        <div class="sheet-head"><div><p class="eyebrow">账本管理</p><h2>我的账本</h2></div><button class="icon-button" data-close="bookDialog" aria-label="关闭">×</button></div>
+        <div id="bookList" class="book-list"></div>
+        <div class="book-add-row"><input id="newBookName" maxlength="16" placeholder="例如：生意账本" /><input id="newBookColor" type="color" value="#3478f6" aria-label="账本颜色" /><button id="addBook" class="small-primary" type="button">创建</button></div>
+        <p class="settings-note">账本可以分别记录家庭、生意或自媒体收支。</p>
       </section>
     </dialog>
 
