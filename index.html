@@ -146,11 +146,13 @@
     <dialog id="reportDialog" class="sheet-dialog report-dialog">
       <section>
         <div class="sheet-head"><div><p class="eyebrow" id="reportEyebrow">月度回顾</p><h2 id="reportMonth">本月统计</h2></div><button class="icon-button" data-close="reportDialog" aria-label="关闭">×</button></div>
-        <div class="report-tabs"><button class="active" data-report-mode="month">月账单</button><button data-report-mode="year">年账单</button></div>
+        <div class="report-tabs"><button class="active" data-report-mode="month">月账单</button><button data-report-mode="year">年账单</button><button data-report-mode="chart">图表</button></div>
+        <div class="bill-picker" id="billPicker"><span id="billPickerLabel">选择年份</span><select id="reportYearPicker"></select></div>
         <div class="report-hero"><span>本月结余</span><strong id="reportBalance">¥0.00</strong><small>每一笔认真记录，都是更安心的生活。</small></div>
         <div class="report-metrics"><article><span>收入</span><b id="reportIncome">¥0.00</b></article><article><span>支出</span><b id="reportExpense">¥0.00</b></article><article><span>记账天数</span><b id="reportDays">0 天</b></article></div>
-        <section class="trend-wrap" id="trendWrap" hidden><div class="trend-head"><h3>每月支出趋势</h3><span id="trendHint"></span></div><canvas id="trendChart" height="150"></canvas></section>
-        <h3>支出排行</h3><div id="reportRanks" class="report-ranks"></div>
+        <section class="trend-wrap" id="trendWrap" hidden><div class="trend-head"><h3 id="trendTitle">每月支出趋势</h3><span id="trendHint"></span></div><div class="chart-periods"><button data-chart-period="week">周</button><button data-chart-period="month">月</button><button data-chart-period="year" class="active">年</button></div><canvas id="trendChart" height="150"></canvas></section>
+        <section id="billTableWrap" class="bill-table-wrap"><div class="bill-table-head" id="billTableHead"></div><div id="billRows" class="bill-rows"></div></section>
+        <section id="rankWrap"><h3>支出排行</h3><div id="reportRanks" class="report-ranks"></div></section>
       </section>
     </dialog>
 
